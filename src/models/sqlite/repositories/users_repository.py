@@ -1,8 +1,9 @@
 from typing import List
 from sqlalchemy.orm.exc import NoResultFound
 from src.models.sqlite.entities.users import UsersTable
+from src.models.sqlite.interfaces.users_repository_interface import IUserRepository
 
-class UserRepository:
+class UserRepository(IUserRepository):
     def __init__(self, db_connection):
         self.__db_connection = db_connection
 

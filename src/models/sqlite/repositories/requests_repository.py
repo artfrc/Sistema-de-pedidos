@@ -2,7 +2,9 @@ from typing import List
 from sqlalchemy.orm.exc import NoResultFound
 from src.models.sqlite.entities.requests import RequestsTable
 
-class RequestsRepository:
+from src.models.sqlite.interfaces.requests_repository_interface import IRequestRepository
+
+class RequestsRepository(IRequestRepository):
 
     def __init__(self, db_connection):
         self.__db_connection = db_connection
