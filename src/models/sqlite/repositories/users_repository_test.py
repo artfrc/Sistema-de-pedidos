@@ -1,9 +1,19 @@
-import pytest
 from unittest import mock
+import pytest
 from mock_alchemy.mocking import UnifiedAlchemyMagicMock
 from sqlalchemy.orm.exc import NoResultFound
 from src.models.sqlite.entities.users import UsersTable
 from .users_repository import UserRepository
+
+class MockUsersTable:
+    
+    def __init__(self):
+        self.user = UsersTable(
+            id=1,
+            name="John Doe",
+            username="johndoe",
+            password="123456"
+        )
 
 class MockConnection:
 
@@ -38,6 +48,15 @@ class MockConnectionNoResult:
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         pass
+
+def test_create_user():
+    mock_connection = MockConnection()
+    repo = UserRepository(mock_connection)
+    user = MockUsersTable().user
+    repo.create_user(user)
+
+    mock_connection.session.add.assert_called_once_with(user)
+    mock_connection.session.commit.assert_called_once()
 
 def test_list_users():
     mock_connection = MockConnection()

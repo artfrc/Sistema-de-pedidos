@@ -1,54 +1,53 @@
-from typing import List
 from sqlalchemy.orm.exc import NoResultFound
-from src.models.sqlite.entities.users import UsersTable
+from typing import List
+from src.models.sqlite.entities.requests import RequestsTable
 
-class UserRepository:
+class RequestsRepository:
+
     def __init__(self, db_connection):
         self.__db_connection = db_connection
 
-    def create_user(self, user: UsersTable):
+    def create_request(self, request: RequestsTable):
         with self.__db_connection as database:
             try:
-                database.session.add(user)
+                database.session.add(request)
                 database.session.commit()
             except Exception as exception:
                 database.session.rollback()
                 raise exception
             
-    def get_user_by_id(self, user_id: int) -> UsersTable:
+    def get_request_by_id(self, request_id: int) -> RequestsTable:
         with self.__db_connection as database:
             try:
-                user = (
+                request = (
                     database.session
-                    .query(UsersTable)
-                    .filter(UsersTable.id == user_id)
+                    .query(RequestsTable)
+                    .filter(RequestsTable.id == request_id)
                     .one()
                 )
-                return user
+                return request
             except NoResultFound:
                 return None
-
-    def list_users(self) -> List[UsersTable]:
-    
+            
+    def list_requests(self) -> List[RequestsTable]:
         with self.__db_connection as database:
             try:
-                users = database.session.query(UsersTable).all()
-                return users
+                requests = database.session.query(RequestsTable).all()
+                return requests
             except NoResultFound:
                 return []
             
-    def delete_user(self, user_id: int):
+    def delete_request(self, request_id: int):
         with self.__db_connection as database:
             try:
                 (
                     database.session
-                    .query(UsersTable)
-                    .filter(UsersTable.id == user_id)
+                    .query(RequestsTable)
+                    .filter(RequestsTable.id == request_id)
                     .delete()
                 )
                 database.session.commit()            
             except Exception as exception:
                 database.session.rollback()
                 raise exception
-
         
