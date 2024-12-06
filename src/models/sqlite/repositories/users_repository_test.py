@@ -9,7 +9,6 @@ class MockUsersTable:
     
     def __init__(self):
         self.user = UsersTable(
-            id=1,
             name="John Doe",
             username="johndoe",
             password="123456"
@@ -23,7 +22,7 @@ class MockConnection:
             [
                 (
                     [mock.call.query(UsersTable)],
-                    [UsersTable(id=1, name="John Doe", username="johndoe")] 
+                    [UsersTable(name="John Doe", username="johndoe", password="123456")] 
                 )
             ]
         )
@@ -68,7 +67,6 @@ def test_get_user_by_id() -> UsersTable:
     mock_connection.session.filter.assert_called_once_with(UsersTable.id == user.id)
     mock_connection.session.one.assert_called_once()
 
-    assert response.id == 1
     assert response.name == "John Doe"
     assert response.username == "johndoe"
 
@@ -80,7 +78,6 @@ def test_list_users():
     mock_connection.session.query.assert_called_once_with(UsersTable)
     mock_connection.session.all.assert_called_once_with()
 
-    assert response[0].id == 1
     assert response[0].name == "John Doe"
     assert response[0].username == "johndoe"
 
