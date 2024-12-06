@@ -7,12 +7,26 @@ class UserRepository:
         self.__db_connection = db_connection
 
     def list_users(self) -> List[UsersTable]:
-        # No with entramos na função __enter__ do objeto self.__db_connection e o retorno é atribuído a variável database
+    
         with self.__db_connection as database:
             try:
                 users = database.session.query(UsersTable).all()
                 return users
             except NoResultFound:
                 return []
+            
+    def delete_user(self, user_id: int):
+        with self.__db_connection as database:
+            try:
+                (
+                    database.session
+                    .query(UsersTable)
+                    .filter(UsersTable.id == user_id)
+                    .delete()
+                )
+                database.session.commit()            
+            except Exception as exception:
+                database.session.rollback()
+                raise exception
 
         
