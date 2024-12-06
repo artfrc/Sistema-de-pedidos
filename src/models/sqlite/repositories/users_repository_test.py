@@ -58,6 +58,20 @@ def test_create_user():
     mock_connection.session.add.assert_called_once_with(user)
     mock_connection.session.commit.assert_called_once()
 
+def test_get_user_by_id() -> UsersTable:
+    mock_connection = MockConnection()
+    repo = UserRepository(mock_connection)
+    user = MockUsersTable().user
+    response = repo.get_user_by_id(user.id)
+
+    mock_connection.session.query.assert_called_once_with(UsersTable)
+    mock_connection.session.filter.assert_called_once_with(UsersTable.id == user.id)
+    mock_connection.session.one.assert_called_once()
+
+    assert response.id == 1
+    assert response.name == "John Doe"
+    assert response.username == "johndoe"
+
 def test_list_users():
     mock_connection = MockConnection()
     repo = UserRepository(mock_connection)
