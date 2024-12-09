@@ -10,7 +10,6 @@ class MockRequestsTable:
 
     def __init__(self):
         self.request = RequestsTable(
-            id=1,
             description="Request 1",
             user_id=1
         )
@@ -23,7 +22,7 @@ class MockConnection:
             [
                 (
                     [mock.call.query(RequestsTable)],
-                    [RequestsTable(id=1, description="Request 1", user_id=1)] 
+                    [RequestsTable(description="Request 1", user_id=1)] 
                 )
             ]
         )
@@ -67,7 +66,6 @@ def test_get_request_by_id() -> RequestsTable:
     mock_connection.session.filter.assert_called_once_with(RequestsTable.id == 1)
     mock_connection.session.one.assert_called_once()
 
-    assert response.id == 1
     assert response.description == "Request 1"
     assert response.user_id == 1
 
@@ -79,7 +77,6 @@ def test_list_requests():
     mock_connection.session.query.assert_called_once_with(RequestsTable)
     mock_connection.session.all.assert_called_once()
 
-    assert response[0].id == 1
     assert response[0].description == "Request 1"
     assert response[0].user_id == 1
 
@@ -111,4 +108,3 @@ def test_delete_request_error():
         repo.delete_request(1)
 
     mock_connection_no_result.session.rollback.assert_called_once()
-    

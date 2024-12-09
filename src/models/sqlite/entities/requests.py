@@ -8,5 +8,9 @@ class RequestsTable(Base):
     description = Column(String)
     user_id = Column(BIGINT, ForeignKey('users.id'), nullable=False)
 
+    def __init__(self, description: str, user_id: int):
+        self.description = description
+        self.user_id = user_id
+
     def __repr__(self):
         return f"Requests: [id: {self.id}, description: {self.description}, user_id: {self.user_id}]"
