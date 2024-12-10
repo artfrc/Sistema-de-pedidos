@@ -1,13 +1,14 @@
 from .request_finder_controller import RequestFinderController
 
 class MockRequest:
-    def __init__(self, request_id):
-        self.request_id = request_id
+    def __init__(self):
+        self.request_id = 1
         self.description = "Test description"
+        self.user_id = 1
 
 class MockRepository:
-    def find_request(self, request_id):
-        request = MockRequest(request_id)
+    def find_request(self):
+        request = MockRequest()
         return request
     
 def test_find_request():
@@ -15,5 +16,12 @@ def test_find_request():
     controller = RequestFinderController(mock_repository)
     request = controller.find_request(1)
 
-    assert request.request_id == 1
-    assert request.description == "Test description"
+    assert request == {
+        'Type': 'Request', 
+        'Count': 1, 
+        'Attributes': {
+            'request_id': 1, 
+            'user_id': 1, 
+            'description': 'Test description'
+        }
+    }

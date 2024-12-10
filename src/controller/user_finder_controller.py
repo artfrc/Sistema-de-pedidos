@@ -1,9 +1,10 @@
 import re
 from typing import  Dict
+from src.controller.interfaces.user_finder_controller_interface import IUserFinderController
 from src.models.sqlite.interfaces.users_repository_interface import IUserRepository
 from src.models.sqlite.entities.users import UsersTable
 
-class UserFinderController:
+class UserFinderController(IUserFinderController):
     def __init__(self, repository: IUserRepository):    
         self.__repository = repository
 

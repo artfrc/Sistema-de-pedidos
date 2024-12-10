@@ -1,9 +1,10 @@
 import re # EXpressões regulares
 from typing import Dict
+from src.controller.interfaces.user_creator_controller_interface import IUserCreatorController
 from src.models.sqlite.interfaces.users_repository_interface import IUserRepository
 from src.models.sqlite.entities.users import UsersTable
 
-class UserCreatorController:
+class UserCreatorController(IUserCreatorController):
     def __init__(self, repository: IUserRepository):    
         self.__repository = repository
 

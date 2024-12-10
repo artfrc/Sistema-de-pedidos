@@ -1,8 +1,9 @@
 from typing import Dict, List
+from src.controller.interfaces.request_lister_controller_interface import IRequestListerController
 from src.models.sqlite.entities.requests import RequestsTable
 from src.models.sqlite.interfaces.requests_repository_interface import IRequestRepository
 
-class RequestListerController:
+class RequestListerController(IRequestListerController):
 
     def __init__(self, repository: IRequestRepository):
         self.__repository = repository

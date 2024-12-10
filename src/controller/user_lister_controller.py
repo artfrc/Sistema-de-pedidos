@@ -1,8 +1,9 @@
 from typing import List, Dict
+from src.controller.interfaces.user_lister_controller_interface import IUserListerController
 from src.models.sqlite.interfaces.users_repository_interface import IUserRepository
 from src.models.sqlite.entities.users import UsersTable
 
-class UserListerController:
+class UserListerController(IUserListerController):
     def __init__(self, repository: IUserRepository):    
         self.__repository = repository
 

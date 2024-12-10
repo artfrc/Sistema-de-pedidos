@@ -1,7 +1,8 @@
 import re
+from src.controller.interfaces.user_deleter_controller_interface import IUserDeleterController
 from src.models.sqlite.interfaces.users_repository_interface import IUserRepository
 
-class UserDeleterController:
+class UserDeleterController(IUserDeleterController):
     def __init__(self, repository: IUserRepository):
         self.__repository = repository
 

@@ -1,7 +1,8 @@
 import re
+from src.controller.interfaces.request_deleter_controller_interface import IRequestDeleterController
 from src.models.sqlite.interfaces.requests_repository_interface import IRequestRepository
 
-class RequestDeleterController:
+class RequestDeleterController(IRequestDeleterController):
     
     def __init__(self, repository: IRequestRepository):
         self.__repository = repository

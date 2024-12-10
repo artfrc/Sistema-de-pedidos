@@ -1,9 +1,10 @@
 import re
 from typing import Dict
+from src.controller.interfaces.request_creator_controller_interface import IRequestCreatorController
 from src.models.sqlite.entities.requests import RequestsTable
 from src.models.sqlite.interfaces.requests_repository_interface import IRequestRepository
 
-class RequestCreatorController:
+class RequestCreatorController(IRequestCreatorController):
 
     def __init__(self, repository: IRequestRepository):
         self.__repository = repository
